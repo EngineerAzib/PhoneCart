@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "519194892311",
+    "project_id": "nibbles-ecommerce-food",
+    "storage_bucket": "nibbles-ecommerce-food.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519194892311:android:ea3eacdbb9218352e6a452",
+        "android_client_info": {
+          "package_name": "com.example.nibbles_ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVPtp8GWutkmL9vKfJK-Q67AfvS9PJL4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
