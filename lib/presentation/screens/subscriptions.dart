@@ -1,12 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:nibbles_ecommerce/presentation/widgets.dart';
-import 'package:nibbles_ecommerce/core/core.dart';
-
 import 'package:nibbles_ecommerce/application/application.dart';
-import 'package:nibbles_ecommerce/configs/configs.dart';
 
 class SubscriptionsScreen extends StatefulWidget {
   const SubscriptionsScreen({super.key});
@@ -18,83 +13,99 @@ class SubscriptionsScreen extends StatefulWidget {
 class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
   @override
   void initState() {
-    context
-        .read<GetOrdersCubit>()
-        .getOrders(FirebaseAuth.instance.currentUser!.uid);
     super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      context.read<GetOrdersCubit>().getOrders(user.uid);
+    } else {
+      print("No user is currently signed in.");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          curvedlRecSvg(AppColors.deepTeal),
-          positionedRow(context),
-          positionedTitle("Subscriptions".toUpperCase()),
-          Positioned(
-              top: AppDimensions.normalize(70),
-              left: AppDimensions.normalize(1),
-              right: AppDimensions.normalize(1),
-              child: BlocBuilder<GetOrdersCubit, GetOrdersState>(
-                builder: (context, state) {
-                  if (state is GetOrdersLoaded && state.orders.isNotEmpty) {
-                    return SizedBox(
-                      height: AppDimensions.normalize(235),
-                      child: ListView.separated(
-                        itemCount: state.orders.length,
-                        padding:
-                            EdgeInsets.only(left: AppDimensions.normalize(15)),
-                        itemBuilder: (context, index) {
-                          return OrderItem(orderModel: state.orders[index]);
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Space.yf();
-                        },
+      appBar: AppBar(
+        title: Text("Subscriptions"),
+      ),
+      body: BlocBuilder<GetOrdersCubit, GetOrdersState>(
+        builder: (context, state) {
+          if (state is GetOrdersLoading) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text(
+                    "Loading subscriptions...",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            );
+          } else if (state is GetOrdersLoaded) {
+            if (state.orders.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.inbox, size: 80, color: Colors.grey),
+                    SizedBox(height: 16),
+                    Text(
+                      "No active subscriptions",
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return ListView.builder(
+                padding: EdgeInsets.all(16),
+                itemCount: state.orders.length,
+                itemBuilder: (context, index) {
+                  final order = state.orders[index];
+                  return Card(
+                    elevation: 2,
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16),
+                      title: Text(
+                        order.packageName,
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    );
-                  } else if (state is GetOrdersLoading) {
-                    return const Center(
-                      child: LoadingTicker(text: AppStrings.loading),
-                    );
-                  } else if (state is GetOrdersLoaded && state.orders.isEmpty) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Space.yf(6),
-                          SvgPicture.asset(
-                            AppAssets.subscriptions,
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.commonAmber, BlendMode.srcIn),
-                          ),
-                          Space.y2!,
-                          Text(
-                            "No active subscription".capitalize(),
-                            style: AppText.h3b,
-                          ),
-                          Space.y1!,
-                          Text(
-                            "There Is no active subscription\nfor your kids"
-                                .capitalize(),
-                            style: AppText.b1,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
+                      subtitle: Text(
+                        'Date: ${order.date.toLocal()}',
+                        style: TextStyle(color: Colors.grey[600]),
                       ),
-                    );
-                  } else if (state is GetOrdersError) {
-                    return Center(
-                      child: Text(
-                        state.errorMessage,
-                        style: AppText.b2b?.copyWith(color: Colors.red),
-                      ),
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
+                      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                    ),
+                  );
                 },
-              ))
-        ],
+              );
+            }
+          } else if (state is GetOrdersError) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error_outline, size: 80, color: Colors.red),
+                    SizedBox(height: 16),
+                    Text(
+                      state.errorMessage,
+                      style: TextStyle(color: Colors.red, fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
       ),
     );
   }

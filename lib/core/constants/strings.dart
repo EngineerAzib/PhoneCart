@@ -32,10 +32,10 @@ sealed class AppStrings {
     'Delicious'
   ];
 
-  static const String gitUrl = "https://github.com/mo7amedaliEbaid";
-  static const String linkedUrl = "https://www.linkedin.com/in/mo7amedebaid/";
+  static const String gitUrl = "https://www.linkedin.com/in/azib-khalid-967365222/";
+  static const String linkedUrl = "https://www.linkedin.com/in/azib-khalid-967365222/";
   static const String nibblesUrl =
-      "https://github.com/mo7amedaliEbaid/nibbles-ecommerce";
+      "https://www.linkedin.com/in/azib-khalid-967365222/";
 
   static const List<String> socialUrls = [
     gitUrl,
@@ -43,8 +43,8 @@ sealed class AppStrings {
     nibblesUrl,
   ];
 
-  static const String location = "Egypt, Cairo, New Cairo";
-  static const String phone = "+201016381636";
+  static const String location = "NED University";
+  static const String phone = "+92 3303189922";
 
   static const List<String> contactInfo = [
     location,

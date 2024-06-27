@@ -44,20 +44,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD02JSxNUsgf55RckCMzwPFWZXc6An9B2o',
-    appId: '1:883610348769:web:8cfa5d10e7b3e3e99c1ba0',
-    messagingSenderId: '883610348769',
-    projectId: 'eccomerce-af8a1',
-    authDomain: 'eccomerce-af8a1.firebaseapp.com',
-    storageBucket: 'eccomerce-af8a1.appspot.com',
+    apiKey: 'AIzaSyDPXHqyaIcfsRJ_FUFTsjViBUM-bR_qQ3g',
+    appId: '1:1092447932041:web:c50cbe8cb2dc268291c058',
+    messagingSenderId: '1092447932041',
+    projectId: 'nibble-9bb9d',
+    authDomain: 'nibble-9bb9d.firebaseapp.com',
+    storageBucket: 'nibble-9bb9d.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyApGiECi2Wgb4PJtVPDbLWD65zZCfcTEY8',
-    appId: '1:883610348769:android:50464351d312d8ac9c1ba0',
-    messagingSenderId: '883610348769',
-    projectId: 'eccomerce-af8a1',
-    storageBucket: 'eccomerce-af8a1.appspot.com',
+    apiKey: 'AIzaSyDPXHqyaIcfsRJ_FUFTsjViBUM-bR_qQ3g',
+    appId: '1:1092447932041:web:c50cbe8cb2dc268291c058',
+    messagingSenderId: '1092447932041',
+    projectId: 'nibble-9bb9d',
+    authDomain: 'nibble-9bb9d.firebaseapp.com',
+    storageBucket: 'nibble-9bb9d.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
